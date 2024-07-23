@@ -5,4 +5,4 @@ Pillow
 svgwrite
 pdf2docx
 img2pdf
-PyQt5
+PySimpleGUI
