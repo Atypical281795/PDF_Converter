@@ -23,7 +23,7 @@ class PDFConverterGUI(QMainWindow):
 
         layout = QVBoxLayout()
 
-        self.drop_label = QLabel("將PDF文件拖放到這裡")
+        self.drop_label = QLabel("將PDF文件拖放到這裡或按'瀏覽'按鈕")
         self.drop_label.setAlignment(Qt.AlignCenter)
         self.drop_label.setStyleSheet("border: 2px dashed #aaa; padding: 20px;")
         self.drop_label.setAcceptDrops(True)
@@ -33,16 +33,19 @@ class PDFConverterGUI(QMainWindow):
         layout.addWidget(self.drop_label)
 
         button_layout = QHBoxLayout()
+        self.select_button = QPushButton("瀏覽")
         self.png_button = QPushButton("轉換為PNG")
         self.jpg_button = QPushButton("轉換為JPG")
         self.svg_button = QPushButton("轉換為SVG")
         self.word_button = QPushButton("轉換為Word")
 
+        self.select_button.clicked.connect(self.open_file_dialog)
         self.png_button.clicked.connect(lambda: self.convert_pdf('png'))
         self.jpg_button.clicked.connect(lambda: self.convert_pdf('jpg'))
         self.svg_button.clicked.connect(lambda: self.convert_pdf('svg'))
         self.word_button.clicked.connect(lambda: self.convert_pdf('word'))
 
+        button_layout.addWidget(self.select_button)
         button_layout.addWidget(self.png_button)
         button_layout.addWidget(self.jpg_button)
         button_layout.addWidget(self.svg_button)
@@ -65,6 +68,13 @@ class PDFConverterGUI(QMainWindow):
             self.drop_label.setText(f"已選擇文件: {os.path.basename(self.pdf_path)}")
         else:
             QMessageBox.warning(self, "錯誤", "請選擇一個有效的PDF文件。")
+
+    def open_file_dialog(self):
+        options = QFileDialog.Options()
+        file_path, _ = QFileDialog.getOpenFileName(self, "選擇PDF文件", "", "PDF Files (*.pdf);;All Files (*)", options=options)
+        if file_path:
+            self.pdf_path = file_path
+            self.drop_label.setText(f"已選擇文件: {os.path.basename(self.pdf_path)}")
 
     def convert_pdf(self, output_format):
         if not self.pdf_path:
