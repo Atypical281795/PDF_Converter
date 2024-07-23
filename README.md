@@ -1,7 +1,7 @@
 # PDF 轉換工具
 
 這是一個使用 Python 開發的 PDF 轉換工具，透過GUI點選button，將 PDF 文件轉換為 PNG、JPG、SVG 或 Word 格式。
-
+要直接使用，就到路徑->...\PDF_Converter\dist\PDF_Converter\PDF_Converter.exe點選執行
 ## 功能
 
 - 支持將 PDF 轉換為 PNG、JPG、SVG 和 Word 格式
